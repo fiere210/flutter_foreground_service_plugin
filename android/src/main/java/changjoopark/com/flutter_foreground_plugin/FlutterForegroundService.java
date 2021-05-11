@@ -51,8 +51,10 @@ public class FlutterForegroundService extends Service {
                 Intent notificationIntent = pm.getLaunchIntentForPackage(getApplicationContext().getPackageName());
                 PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                         notificationIntent, 0);
-
-                stoppedReceiver = intent.getParcelableExtra(FlutterForegroundPlugin.STOP_LISTENER);
+                final ResultReceiver stopResultReceiver = intent.getParcelableExtra(FlutterForegroundPlugin.STOP_LISTENER);
+                if (stopResultReceiver != null) {
+                    stoppedReceiver = stopResultReceiver;
+                }
 
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -92,7 +94,9 @@ public class FlutterForegroundService extends Service {
                 break;
             case FlutterForegroundPlugin.STOP_FOREGROUND_ACTION:
             case ACTION_STOP_SERVICE:
-                stoppedReceiver.send(Activity.RESULT_OK, new Bundle());
+                if (stoppedReceiver != null) {
+                    stoppedReceiver.send(Activity.RESULT_OK, new Bundle());
+                }
                 stopFlutterForegroundService();
                 break;
             case FlutterForegroundPlugin.UPDATE_FOREGROUND_ACTION:
