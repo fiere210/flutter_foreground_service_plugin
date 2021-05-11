@@ -1,9 +1,11 @@
 package changjoopark.com.flutter_foreground_plugin;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -19,7 +21,9 @@ public class FlutterForegroundService extends Service {
     public static int ONGOING_NOTIFICATION_ID = 1;
     public static final String NOTIFICATION_CHANNEL_ID = "CHANNEL_ID";
     public static final String ACTION_STOP_SERVICE = "STOP";
-
+    private NotificationManager getNotificationManager() {
+        return (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    }
     private boolean userStopForegroundService = false;
     private NotificationCompat.Builder builder;
     @Override
@@ -85,7 +89,7 @@ public class FlutterForegroundService extends Service {
                 break;
             case FlutterForegroundPlugin.UPDATE_FOREGROUND_ACTION:
                 Bundle _bundle = intent.getExtras();
-                updateForgroundContent(_bundle.getString("content"));
+                updateForegroundContent(_bundle.getString("content"));
                 break;
             default:
                 break;
@@ -110,9 +114,11 @@ public class FlutterForegroundService extends Service {
         return null;
     }
 
-    private void updateForgroundContent(String content) {
+    private void updateForegroundContent(String content) {
         if (builder != null) {
             builder.setContentText(content);
+            Notification notification = builder.build();
+            getNotificationManager().notify(1, notification);
         }
     }
 
