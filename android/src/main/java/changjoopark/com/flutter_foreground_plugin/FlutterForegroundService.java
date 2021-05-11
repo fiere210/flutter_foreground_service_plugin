@@ -93,6 +93,8 @@ public class FlutterForegroundService extends Service {
                 startForeground(ONGOING_NOTIFICATION_ID, builder.build());
                 break;
             case FlutterForegroundPlugin.STOP_FOREGROUND_ACTION:
+                stopFlutterForegroundService();
+                break;
             case ACTION_STOP_SERVICE:
                 if (stoppedReceiver != null) {
                     stoppedReceiver.send(Activity.RESULT_OK, new Bundle());
@@ -134,8 +136,7 @@ public class FlutterForegroundService extends Service {
     }
 
     private int getNotificationIcon(String iconName) {
-        int resourceId = getApplicationContext().getResources().getIdentifier(iconName, "drawable", getApplicationContext().getPackageName());
-        return resourceId;
+        return getApplicationContext().getResources().getIdentifier(iconName, "drawable", getApplicationContext().getPackageName());
     }
 
     private void stopFlutterForegroundService() {
