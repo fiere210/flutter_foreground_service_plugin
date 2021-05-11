@@ -51,6 +51,12 @@ class FlutterForegroundPlugin {
     });
   }
 
+  static Future<void> updateContent(String content) async {
+    await _mainChannel.invokeMethod("updateContent", <String, dynamic>{
+      'content': content,
+    });
+  }
+
   static Future<void> stopForegroundService() async {
     await _mainChannel.invokeMethod("stopForegroundService");
   }

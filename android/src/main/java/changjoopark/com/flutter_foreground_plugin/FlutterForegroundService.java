@@ -21,7 +21,7 @@ public class FlutterForegroundService extends Service {
     public static final String ACTION_STOP_SERVICE = "STOP";
 
     private boolean userStopForegroundService = false;
-
+    private NotificationCompat.Builder builder;
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent == null) {
@@ -52,7 +52,7 @@ public class FlutterForegroundService extends Service {
                     ((NotificationManager) getSystemService(NOTIFICATION_SERVICE))
                             .createNotificationChannel(channel);
                 }
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+                builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                         .setSmallIcon(getNotificationIcon(bundle.getString("icon")))
                         .setColor(bundle.getInt("color"))
                         .setContentTitle(bundle.getString("title"))
@@ -80,10 +80,12 @@ public class FlutterForegroundService extends Service {
                 startForeground(ONGOING_NOTIFICATION_ID, builder.build());
                 break;
             case FlutterForegroundPlugin.STOP_FOREGROUND_ACTION:
-                stopFlutterForegroundService();
-                break;
             case ACTION_STOP_SERVICE:
                 stopFlutterForegroundService();
+                break;
+            case FlutterForegroundPlugin.UPDATE_FOREGROUND_ACTION:
+                Bundle _bundle = intent.getExtras();
+                updateForgroundContent(_bundle.getString("content"));
                 break;
             default:
                 break;
@@ -106,6 +108,12 @@ public class FlutterForegroundService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
+    }
+
+    private void updateForgroundContent(String content) {
+        if (builder != null) {
+            builder.setContentText(content);
+        }
     }
 
     private int getNotificationIcon(String iconName) {

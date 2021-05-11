@@ -23,8 +23,9 @@ import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler {
     public final static String START_FOREGROUND_ACTION = "com.changjoopark.flutter_foreground_plugin.action.startforeground";
     public final static String STOP_FOREGROUND_ACTION = "com.changjoopark.flutter_foreground_plugin.action.stopforeground";
+    public final static String UPDATE_FOREGROUND_ACTION = "com.changjoopark.flutter_foreground_plugin.action.updateforeground";
 
-    private static FlutterForegroundPlugin instance;
+    public static FlutterForegroundPlugin instance;
 
     private Context context;
     private MethodChannel callbackChannel;
@@ -35,7 +36,7 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
     private Runnable runnable;
     private Handler handler = new Handler(Looper.getMainLooper());
 
-    private FlutterForegroundPlugin() {}
+    public FlutterForegroundPlugin() {}
 
     @Override
     public void onAttachedToEngine(FlutterPluginBinding binding) {
@@ -89,6 +90,9 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
                 stopForegroundService();
                 result.success("stopForegroundService");
                 break;
+            case "updateContent":
+                updateForegroundContent(call.argument("content"));
+                break;
             case "setServiceMethodInterval":
                 if (call.argument("seconds") == null) {
                     result.notImplemented();
@@ -141,6 +145,13 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
         startServiceLoop();
 
         callbackChannel.invokeMethod("onStarted", null);
+    }
+
+    private void updateForegroundContent(String content) {
+        Intent intent = new Intent(context, FlutterForegroundService.class);
+        intent.setAction(UPDATE_FOREGROUND_ACTION);
+        intent.putExtra("content", content);
+        context.startService(intent);
     }
 
     /**

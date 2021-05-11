@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="c539f5ab-057a-4d26-896e-f10ef225f60f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/changjoopark/com/flutter_foreground_plugin/FlutterForegroundPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/changjoopark/com/flutter_foreground_plugin/FlutterForegroundPlugin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/android/src/main/java/changjoopark/com/flutter_foreground_plugin/FlutterForegroundService.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/changjoopark/com/flutter_foreground_plugin/FlutterForegroundService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/flutter_foreground_plugin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_foreground_plugin.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/flutter_foreground_plugin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_foreground_plugin.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -34,7 +59,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
   <component name="RecentsManager">
@@ -55,19 +80,26 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
-    <state x="1325" y="590" key="AndroidProcessChooserDialog" timestamp="1610072006474">
-      <screen x="0" y="0" width="3072" height="1688" />
+    <state x="536" y="145" key="#Plugins" timestamp="1620713398785">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1325" y="590" key="AndroidProcessChooserDialog/0.0.3072.1688@0.0.3072.1688" timestamp="1610072006474" />
-    <state x="1428" y="576" width="585" height="536" key="find.popup" timestamp="1610434246878">
-      <screen x="62" y="0" width="3010" height="1728" />
+    <state x="536" y="145" key="#Plugins/0.0.1920.1040@0.0.1920.1040" timestamp="1620713398785" />
+    <state x="445" y="149" key="SettingsEditor" timestamp="1620713466148">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="1428" y="576" width="585" height="536" key="find.popup/62.0.3010.1728@62.0.3010.1728" timestamp="1610434246878" />
-    <state x="1384" y="391" width="672" height="678" key="search.everywhere.popup" timestamp="1610434242488">
-      <screen x="62" y="0" width="3010" height="1728" />
-    </state>
-    <state x="1384" y="391" width="672" height="678" key="search.everywhere.popup/62.0.3010.1728@62.0.3010.1728" timestamp="1610434242488" />
+    <state x="445" y="149" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1620713466148" />
   </component>
   <component name="masterDetails">
     <states>
