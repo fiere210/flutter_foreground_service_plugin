@@ -91,7 +91,8 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
                 result.success("stopForegroundService");
                 break;
             case "updateContent":
-                updateForegroundContent(call.argument("content"));
+                final String content = call.argument("content");
+                updateForegroundContent(content);
                 break;
             case "setServiceMethodInterval":
                 if (call.argument("seconds") == null) {

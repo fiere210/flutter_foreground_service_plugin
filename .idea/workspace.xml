@@ -16,20 +16,17 @@
         <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
       </path>
     </expand>
-    <select />
+    <select>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="BRANCH:master" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </select>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c539f5ab-057a-4d26-896e-f10ef225f60f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/java/changjoopark/com/flutter_foreground_plugin/FlutterForegroundPlugin.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/changjoopark/com/flutter_foreground_plugin/FlutterForegroundPlugin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/java/changjoopark/com/flutter_foreground_plugin/FlutterForegroundService.java" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/java/changjoopark/com/flutter_foreground_plugin/FlutterForegroundService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/example/.flutter-plugins-dependencies" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/flutter_foreground_plugin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/flutter_foreground_plugin.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/flutter_foreground_plugin.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_foreground_plugin.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +75,14 @@
       <option name="presentableId" value="Default" />
       <updated>1573110113502</updated>
     </task>
+    <task id="LOCAL-00001" summary="added update content functionality">
+      <created>1620715238983</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1620715238983</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -85,11 +90,27 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="added update content functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="added update content functionality" />
   </component>
   <component name="WindowStateProjectService">
     <state x="536" y="145" key="#Plugins" timestamp="1620713398785">
@@ -100,6 +121,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="445" y="149" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1620713466148" />
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1620715348485">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1620715348485" />
   </component>
   <component name="masterDetails">
     <states>
