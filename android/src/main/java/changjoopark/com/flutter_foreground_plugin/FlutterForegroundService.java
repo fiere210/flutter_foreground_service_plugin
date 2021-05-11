@@ -1,5 +1,6 @@
 package changjoopark.com.flutter_foreground_plugin;
 
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -11,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.ResultReceiver;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -21,11 +23,15 @@ public class FlutterForegroundService extends Service {
     public static int ONGOING_NOTIFICATION_ID = 1;
     public static final String NOTIFICATION_CHANNEL_ID = "CHANNEL_ID";
     public static final String ACTION_STOP_SERVICE = "STOP";
+
     private NotificationManager getNotificationManager() {
         return (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
+
     private boolean userStopForegroundService = false;
     private NotificationCompat.Builder builder;
+    private ResultReceiver stoppedReceiver;
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent == null) {
@@ -38,7 +44,7 @@ public class FlutterForegroundService extends Service {
         }
         final String action = intent.getAction();
         Log.d(TAG, String.format("onStartCommand: %s", action));
-
+        Bundle bundle = intent.getExtras();
         switch (action) {
             case FlutterForegroundPlugin.START_FOREGROUND_ACTION:
                 PackageManager pm = getApplicationContext().getPackageManager();
@@ -46,7 +52,8 @@ public class FlutterForegroundService extends Service {
                 PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                         notificationIntent, 0);
 
-                Bundle bundle = intent.getExtras();
+                stoppedReceiver = intent.getParcelableExtra(FlutterForegroundPlugin.STOP_LISTENER);
+
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID,
@@ -85,11 +92,11 @@ public class FlutterForegroundService extends Service {
                 break;
             case FlutterForegroundPlugin.STOP_FOREGROUND_ACTION:
             case ACTION_STOP_SERVICE:
+                stoppedReceiver.send(Activity.RESULT_OK, new Bundle());
                 stopFlutterForegroundService();
                 break;
             case FlutterForegroundPlugin.UPDATE_FOREGROUND_ACTION:
-                Bundle _bundle = intent.getExtras();
-                updateForegroundContent(_bundle.getString("content"));
+                updateForegroundContent(bundle.getString("content"));
                 break;
             default:
                 break;
@@ -118,7 +125,7 @@ public class FlutterForegroundService extends Service {
         if (builder != null) {
             builder.setContentText(content);
             Notification notification = builder.build();
-            getNotificationManager().notify(1, notification);
+            getNotificationManager().notify(ONGOING_NOTIFICATION_ID, notification);
         }
     }
 

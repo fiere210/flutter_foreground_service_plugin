@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.ResultReceiver;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.plugin.common.BinaryMessenger;
@@ -24,6 +26,7 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
     public final static String START_FOREGROUND_ACTION = "com.changjoopark.flutter_foreground_plugin.action.startforeground";
     public final static String STOP_FOREGROUND_ACTION = "com.changjoopark.flutter_foreground_plugin.action.stopforeground";
     public final static String UPDATE_FOREGROUND_ACTION = "com.changjoopark.flutter_foreground_plugin.action.updateforeground";
+    public final static String STOP_LISTENER = "com.changjoopark.flutter_foreground_plugin.action.stoplistener";
 
     public static FlutterForegroundPlugin instance;
 
@@ -36,7 +39,8 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
     private Runnable runnable;
     private Handler handler = new Handler(Looper.getMainLooper());
 
-    public FlutterForegroundPlugin() {}
+    public FlutterForegroundPlugin() {
+    }
 
     @Override
     public void onAttachedToEngine(FlutterPluginBinding binding) {
@@ -87,7 +91,7 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
                 result.success("startForegroundService");
                 break;
             case "stopForegroundService":
-                stopForegroundService();
+                stopForegroundService(true);
                 result.success("stopForegroundService");
                 break;
             case "updateContent":
@@ -135,6 +139,12 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
         intent.putExtra("stop_action", stopAction);
         intent.putExtra("stop_icon", stopIcon);
         intent.putExtra("stop_text", stopText);
+        intent.putExtra(STOP_LISTENER, new ResultReceiver(new Handler()) {
+            @Override
+            protected void onReceiveResult(int resultCode, Bundle resultData) {
+                stopForegroundService(false);
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(intent);
@@ -158,7 +168,7 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
     /**
      *
      */
-    private void stopForegroundService() {
+    public void stopForegroundService(boolean updateService) {
         serviceStarted = false;
 
         if (handler != null) {
@@ -167,10 +177,11 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
 
         dartServiceMethodHandle = -1;
         methodInterval = -1;
-
-        Intent intent = new Intent(context, FlutterForegroundService.class);
-        intent.setAction(STOP_FOREGROUND_ACTION);
-        context.startService(intent);
+        if (updateService == true) {
+            Intent intent = new Intent(context, FlutterForegroundService.class);
+            intent.setAction(STOP_FOREGROUND_ACTION);
+            context.startService(intent);
+        }
         callbackChannel.invokeMethod("onStopped", null);
     }
 
