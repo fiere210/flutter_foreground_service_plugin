@@ -60,6 +60,7 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
     @Override
     public void onDetachedFromEngine(FlutterPluginBinding binding) {
         System.out.println("onDetachedFromEngine called!!");
+        stopForegroundService(true);
     }
 
     /**
