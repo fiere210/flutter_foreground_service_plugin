@@ -70,7 +70,7 @@ public class FlutterForegroundService extends Service {
                         .setSmallIcon(getNotificationIcon(bundle.getString("icon")))
                         .setLargeIcon(
                                 BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                                        getNotificationIcon(bundle.getString("icon")))
+                                        getNotificationIcon("ic_timer"))
                         )
                         .setColor(bundle.getInt("color"))
                         .setContentTitle(bundle.getString("title"))
