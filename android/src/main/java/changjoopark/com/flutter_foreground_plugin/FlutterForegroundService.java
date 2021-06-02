@@ -9,6 +9,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -66,7 +67,11 @@ public class FlutterForegroundService extends Service {
                             .createNotificationChannel(channel);
                 }
                 builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-//                        .setSmallIcon(getNotificationIcon(bundle.getString("icon")))
+                        .setSmallIcon(getNotificationIcon(bundle.getString("icon")))
+                        .setLargeIcon(
+                                BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                                        getNotificationIcon(bundle.getString("icon")))
+                        )
                         .setColor(bundle.getInt("color"))
                         .setContentTitle(bundle.getString("title"))
                         .setContentText(bundle.getString("content"))
