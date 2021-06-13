@@ -11,6 +11,7 @@ class FlutterForegroundPlugin {
       'com.changjoopark.flutter_foreground_plugin/callback');
 
   static Function? onStartedMethod;
+  static Function? onOpenedMethod;
   static Function? onStoppedMethod;
 
   /// [startForegroundService]
@@ -28,9 +29,14 @@ class FlutterForegroundPlugin {
     bool stopAction = false,
     String? stopIcon,
     String stopText = 'Close',
+    Function? onOpened,
   }) async {
     if (onStarted != null) {
       onStartedMethod = onStarted;
+    }
+
+    if (onOpened != null) {
+      onOpenedMethod = onOpened;
     }
 
     if (onStopped != null) {
@@ -88,6 +94,11 @@ class FlutterForegroundPlugin {
       case "onStopped":
         if (onStoppedMethod != null) {
           onStoppedMethod!();
+        }
+        break;
+      case "onOpened":
+        if (onOpenedMethod != null) {
+          onOpenedMethod!();
         }
         break;
       case "onServiceMethodCallback":

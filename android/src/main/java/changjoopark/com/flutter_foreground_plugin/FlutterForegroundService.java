@@ -1,5 +1,4 @@
 package changjoopark.com.flutter_foreground_plugin;
-
 import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -8,7 +7,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,6 +22,7 @@ public class FlutterForegroundService extends Service {
     public static int ONGOING_NOTIFICATION_ID = 1;
     public static final String NOTIFICATION_CHANNEL_ID = "CHANNEL_ID";
     public static final String ACTION_STOP_SERVICE = "STOP";
+    public static final String ACTION_CLICKED = "CLICKED";
 
     private NotificationManager getNotificationManager() {
         return (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -32,6 +31,7 @@ public class FlutterForegroundService extends Service {
     private boolean userStopForegroundService = false;
     private NotificationCompat.Builder builder;
     private ResultReceiver stoppedReceiver;
+    private ResultReceiver openedReceiver;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -48,13 +48,17 @@ public class FlutterForegroundService extends Service {
         Bundle bundle = intent.getExtras();
         switch (action) {
             case FlutterForegroundPlugin.START_FOREGROUND_ACTION:
-                PackageManager pm = getApplicationContext().getPackageManager();
-                Intent notificationIntent = pm.getLaunchIntentForPackage(getApplicationContext().getPackageName());
-                PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
-                        notificationIntent, 0);
+                Intent openAction = new Intent(this, FlutterForegroundService.class);
+                openAction.setAction(ACTION_CLICKED);
+                PendingIntent pOpenAction = PendingIntent
+                        .getService(this, 0, openAction, PendingIntent.FLAG_CANCEL_CURRENT);
                 final ResultReceiver stopResultReceiver = intent.getParcelableExtra(FlutterForegroundPlugin.STOP_LISTENER);
+                final ResultReceiver openResultReceiver = intent.getParcelableExtra(FlutterForegroundPlugin.OPEN_LISTENER);
                 if (stopResultReceiver != null) {
                     stoppedReceiver = stopResultReceiver;
+                }
+                if (openResultReceiver != null) {
+                    openedReceiver = openResultReceiver;
                 }
 
 
@@ -76,7 +80,7 @@ public class FlutterForegroundService extends Service {
                         .setContentTitle(bundle.getString("title"))
                         .setContentText(bundle.getString("content"))
                         .setCategory(NotificationCompat.CATEGORY_SERVICE)
-                        .setContentIntent(pendingIntent)
+                        .setContentIntent(pOpenAction)
                         .setUsesChronometer(bundle.getBoolean("chronometer"))
                         .setOnlyAlertOnce(true)
                         .setOngoing(true);
@@ -106,6 +110,11 @@ public class FlutterForegroundService extends Service {
                     stoppedReceiver.send(Activity.RESULT_OK, new Bundle());
                 }
                 stopFlutterForegroundService();
+                break;
+            case ACTION_CLICKED:
+                if (openedReceiver != null) {
+                    openedReceiver.send(Activity.RESULT_OK, new Bundle());
+                }
                 break;
             case FlutterForegroundPlugin.UPDATE_FOREGROUND_ACTION:
                 updateForegroundContent(bundle.getString("content"));

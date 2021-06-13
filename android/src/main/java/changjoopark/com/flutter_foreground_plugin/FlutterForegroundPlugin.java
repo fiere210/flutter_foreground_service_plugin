@@ -27,7 +27,7 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
     public final static String STOP_FOREGROUND_ACTION = "com.changjoopark.flutter_foreground_plugin.action.stopforeground";
     public final static String UPDATE_FOREGROUND_ACTION = "com.changjoopark.flutter_foreground_plugin.action.updateforeground";
     public final static String STOP_LISTENER = "com.changjoopark.flutter_foreground_plugin.action.stoplistener";
-
+    public final static String OPEN_LISTENER = "com.changjoopark.flutter_foreground_plugin.action.openlistener";
     public static FlutterForegroundPlugin instance;
 
     private Context context;
@@ -146,6 +146,12 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
                 stopForegroundService(false);
             }
         });
+        intent.putExtra(OPEN_LISTENER, new ResultReceiver(new Handler()) {
+            @Override
+            protected void onReceiveResult(int resultCode, Bundle resultData) {
+                notificationClicked();
+            }
+        });
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(intent);
@@ -157,6 +163,13 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
         startServiceLoop();
 
         callbackChannel.invokeMethod("onStarted", null);
+    }
+
+    public void notificationClicked() {
+        Intent dialogIntent = new Intent(context, context.getClass());
+        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(dialogIntent);
+        callbackChannel.invokeMethod("onOpened", null);
     }
 
     private void updateForegroundContent(String content) {
