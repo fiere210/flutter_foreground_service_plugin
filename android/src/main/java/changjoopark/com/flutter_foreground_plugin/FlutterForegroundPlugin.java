@@ -1,8 +1,8 @@
 package changjoopark.com.flutter_foreground_plugin;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,8 +16,6 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
-import io.flutter.embedding.engine.plugins.activity.ActivityAware;
-import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
 
 /**
  * FlutterForegroundPlugin
@@ -166,7 +164,8 @@ public class FlutterForegroundPlugin implements FlutterPlugin, MethodCallHandler
     }
 
     public void notificationClicked() {
-        Intent dialogIntent = new Intent(context, context.getClass());
+        PackageManager pm = context.getApplicationContext().getPackageManager();
+        Intent dialogIntent = pm.getLaunchIntentForPackage(context.getApplicationContext().getPackageName());
         dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(dialogIntent);
         callbackChannel.invokeMethod("onOpened", null);
