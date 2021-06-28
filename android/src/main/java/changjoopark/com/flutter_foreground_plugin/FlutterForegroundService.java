@@ -71,7 +71,7 @@ public class FlutterForegroundService extends Service {
                             .createNotificationChannel(channel);
                 }
                 builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
-                        .setSmallIcon(getNotificationIcon(bundle.getString("icon")))
+                        .setSmallIcon(getNotificationIcon("ic_stat"))
                         .setLargeIcon(
                                 BitmapFactory.decodeResource(getApplicationContext().getResources(),
                                         getNotificationIcon("ic_timer"))
