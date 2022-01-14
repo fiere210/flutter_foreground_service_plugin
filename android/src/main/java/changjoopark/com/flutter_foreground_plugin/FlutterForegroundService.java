@@ -50,8 +50,17 @@ public class FlutterForegroundService extends Service {
             case FlutterForegroundPlugin.START_FOREGROUND_ACTION:
                 Intent openAction = new Intent(this, FlutterForegroundService.class);
                 openAction.setAction(ACTION_CLICKED);
-                PendingIntent pOpenAction = PendingIntent
+                
+                PendingIntent pOpenAction;
+                    
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    pOpenAction = PendingIntent
+                        .getService(this, 0, openAction, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_CANCEL_CURRENT);
+                } else {
+                    pOpenAction = PendingIntent
                         .getService(this, 0, openAction, PendingIntent.FLAG_CANCEL_CURRENT);
+                }
+                
                 final ResultReceiver stopResultReceiver = intent.getParcelableExtra(FlutterForegroundPlugin.STOP_LISTENER);
                 final ResultReceiver openResultReceiver = intent.getParcelableExtra(FlutterForegroundPlugin.OPEN_LISTENER);
                 if (stopResultReceiver != null) {
